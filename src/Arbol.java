@@ -15,7 +15,7 @@ public class Arbol {
     public void LanzarPreOrden(){
         this.preOrden(this.inicial);
     }
-    public void preOrden(NodoArbol nodo){
+    private void preOrden(NodoArbol nodo){
         if(nodo==null){
             return;//detener recursividad
         }else {
@@ -29,7 +29,7 @@ public class Arbol {
     public void LanzarInOrden(){
         this.inOrden(this.inicial);
     }
-    public void inOrden(NodoArbol nodo){
+    private void inOrden(NodoArbol nodo){
         if(nodo==null){
             return;//detener recursividad
         }else {
@@ -42,7 +42,7 @@ public class Arbol {
     public void LanzarPostOrden(){
         this.postOrden(this.inicial);
     }
-    public void postOrden(NodoArbol nodo){
+    private void postOrden(NodoArbol nodo){
         if(nodo==null){
             return;//detener recursividad
         }else {
@@ -52,5 +52,42 @@ public class Arbol {
 
         }
 
+    }
+    public void borrar(int valor) {
+        this.inicial = borrarNodo(this.inicial, valor);
+    }
+
+    private NodoArbol borrarNodo(NodoArbol nodo, int valor) {
+        if (nodo == null) {
+            System.out.println("dato no encontrado");
+            return null; // Nodo no encontrado
+        }
+
+        if (valor < nodo.getValor()) {
+            nodo.setNodoIzq(borrarNodo(nodo.getNodoIzq(), valor));
+        } else if (valor > nodo.getValor()) {
+            nodo.setNodoDer(borrarNodo(nodo.getNodoDer(), valor));
+        } else {
+            // Nodo encontrado, realizar la eliminación
+            if (nodo.getNodoIzq() == null) {
+                return nodo.getNodoDer(); // Caso 1: Nodo con un hijo o sin hijos
+            } else if (nodo.getNodoDer() == null) {
+                return nodo.getNodoIzq(); // Caso 2: Nodo con un hijo
+            } else {
+                // Caso 3: Nodo con dos hijos
+                NodoArbol sucesor = encontrarSucesor(nodo.getNodoDer());
+                nodo.setValor(sucesor.getValor());
+                nodo.setNodoDer(borrarNodo(nodo.getNodoDer(), sucesor.getValor()));
+            }
+        }
+        return nodo;
+    }
+
+    private NodoArbol encontrarSucesor(NodoArbol nodo) {
+        NodoArbol actual = nodo;
+        while (actual.getNodoIzq() != null) {
+            actual = actual.getNodoIzq();
+        }
+        return actual;
     }
 }

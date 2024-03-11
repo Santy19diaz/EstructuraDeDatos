@@ -12,6 +12,19 @@ public class NodoArbol {
     public int getValor() {
         return valor;
     }
+
+    public void setValor(int valor) {
+        this.valor = valor;
+    }
+
+    public void setNodoIzq(NodoArbol nodoIzq) {
+        this.nodoIzq = nodoIzq;
+    }
+
+    public void setNodoDer(NodoArbol nodoDer) {
+        this.nodoDer = nodoDer;
+    }
+
     public NodoArbol getNodoIzq() {
         return nodoIzq;
     }
